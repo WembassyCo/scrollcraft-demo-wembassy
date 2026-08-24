@@ -3,532 +3,406 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wembassy — We Build the Infrastructure for Modern Family Wealth</title>
+<title>Wembassy — AI-Powered Digital Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
-/* ===== RESET & BASE ===== */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:'Inter',sans-serif;background:#0A1628;color:#F5F2EC;overflow-x:hidden;line-height:1.6}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-section{position:relative}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#e8e8e8;overflow-x:hidden}
+::selection{background:#c4a35a;color:#0a0a0a}
 
-/* ===== COLORS ===== */
-:root{
-  --navy:#0A1628;
-  --navy-2:#0E1D33;
-  --navy-3:#132842;
-  --gold:#C9A961;
-  --gold-soft:rgba(201,169,97,0.15);
-  --off-white:#F5F2EC;
-  --charcoal:#1A1A1A;
-  --muted:rgba(245,242,236,0.6);
-  --border:rgba(245,242,236,0.08);
-  --ease:cubic-bezier(0.22,1,0.36,1);
-}
+/* Navigation */
+nav{position:fixed;top:0;width:100%;z-index:1000;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;transition:all .3s ease;backdrop-filter:blur(0)}
+nav.scrolled{background:rgba(10,10,10,.95);backdrop-filter:blur(10px);padding:15px 40px;border-bottom:1px solid rgba(196,163,90,.15)}
+nav .logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#c4a35a;letter-spacing:-.5px}
+nav ul{display:flex;list-style:none;gap:36px}
+nav ul a{color:#e8e8e8;text-decoration:none;font-size:14px;font-weight:400;letter-spacing:.5px;transition:color .3s}
+nav ul a:hover{color:#c4a35a}
+nav .nav-cta{padding:10px 24px;border:1px solid #c4a35a;color:#c4a35a;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:1px;transition:all .3s;border-radius:2px}
+nav .nav-cta:hover{background:#c4a35a;color:#0a0a0a}
 
-/* ===== TYPOGRAPHY ===== */
-h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;line-height:1.15;letter-spacing:-0.02em}
-.eyebrow{font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+/* Hero */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(196,163,90,.08) 0%,transparent 60%),linear-gradient(180deg,#0a0a0a 0%,#111 50%,#0a0a0a 100%);z-index:0}
+.hero-bg::after{content:'';position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80');background-size:cover;background-position:center;opacity:.08;filter:grayscale(100%)}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 24px}
+.hero-tag{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#c4a35a;margin-bottom:24px;font-weight:500;opacity:0}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,7vw,88px);font-weight:700;line-height:1.05;margin-bottom:28px;opacity:0}
+.hero h1 span{color:#c4a35a;font-style:italic}
+.hero p{font-size:clamp(16px,2vw,20px);color:#999;max-width:620px;margin:0 auto 40px;line-height:1.7;font-weight:300;opacity:0}
+.hero-cta{display:inline-flex;gap:16px;opacity:0}
+.hero-cta a{padding:16px 36px;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:1px;border-radius:2px;transition:all .3s}
+.hero-cta .primary{background:#c4a35a;color:#0a0a0a}
+.hero-cta .primary:hover{background:#d4b36a;transform:translateY(-2px)}
+.hero-cta .secondary{border:1px solid rgba(255,255,255,.2);color:#e8e8e8}
+.hero-cta .secondary:hover{border-color:#c4a35a;color:#c4a35a}
+.scroll-indicator{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:2px;height:50px;background:linear-gradient(180deg,transparent,#c4a35a);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* ===== LAYOUT ===== */
-.container{max-width:1200px;margin:0 auto;padding:0 2rem}
-.section-pad{padding:8rem 0}
+/* Section common */
+section{padding:100px 40px;position:relative}
+.container{max-width:1200px;margin:0 auto}
+.section-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#c4a35a;margin-bottom:16px;font-weight:600}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,56px);font-weight:600;line-height:1.15;margin-bottom:24px}
 
-/* ===== NAV ===== */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 2rem;transition:all .4s var(--ease);background:transparent}
-nav.scrolled{background:rgba(10,22,40,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:.85rem 2rem;border-bottom:1px solid var(--border)}
-nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-nav .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--off-white);letter-spacing:-.02em}
-nav .logo span{color:var(--gold)}
-nav .nav-links{display:flex;gap:2.5rem;align-items:center}
-nav .nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:color .3s var(--ease)}
-nav .nav-links a:hover{color:var(--off-white)}
-nav .nav-cta{padding:.6rem 1.5rem;background:var(--gold);color:var(--navy);border-radius:2px;font-size:.8rem;font-weight:600;letter-spacing:.05em;transition:all .3s var(--ease)}
-nav .nav-cta:hover{background:#D9B971;transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,169,97,0.25)}
-@media(max-width:768px){nav .nav-links{display:none}}
+/* Services */
+.services{background:#0a0a0a}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:60px}
+.service-card{background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid rgba(196,163,90,.1);border-radius:4px;padding:40px 32px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,#c4a35a,transparent);transform:translateX(-100%);transition:transform .6s}
+.service-card:hover{border-color:rgba(196,163,90,.3);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+.service-card:hover::before{transform:translateX(100%)}
+.service-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px;color:#c4a35a;background:rgba(196,163,90,.08);border-radius:50%}
+.service-card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:12px;color:#fff}
+.service-card p{font-size:15px;line-height:1.7;color:#888;font-weight:300}
+.service-card .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.service-card .tags span{font-size:11px;padding:4px 12px;background:rgba(196,163,90,.08);color:#c4a35a;border-radius:20px;letter-spacing:.5px}
 
-/* ===== HERO ===== */
-.hero{height:100vh;min-height:700px;position:sticky;top:0;overflow:hidden;display:flex;align-items:center;z-index:1}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0A1628 0%,#0E1D33 40%,#132842 70%,#0A1628 100%);transition:background 1.5s ease}
-.hero-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(201,169,97,0.08) 0%,transparent 50%)}
-.hero-grain{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 2rem;width:100%}
-.hero .eyebrow{margin-bottom:1.5rem;opacity:0;transform:translateY(20px);transition:all .8s var(--ease) .2s}
-.hero h1{font-size:clamp(2.5rem,7vw,5.5rem);font-weight:500;max-width:900px;opacity:0;transform:translateY(40px);transition:all 1s var(--ease) .4s}
-.hero h1 em{font-style:italic;color:var(--gold);font-weight:400}
-.hero .hero-sub{margin-top:1.75rem;font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);max-width:560px;font-weight:300;opacity:0;transform:translateY(30px);transition:all .9s var(--ease) .6s}
-.hero .hero-cta-row{margin-top:3rem;display:flex;gap:1.5rem;align-items:center;opacity:0;transform:translateY(30px);transition:all .9s var(--ease) .8s}
-.hero.in .eyebrow,.hero.in h1,.hero.in .hero-sub,.hero.in .hero-cta-row{opacity:1;transform:translateY(0)}
-.btn-primary{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 2rem;background:var(--gold);color:var(--navy);border-radius:2px;font-weight:600;font-size:.9rem;letter-spacing:.03em;transition:all .3s var(--ease)}
-.btn-primary:hover{background:#D9B971;transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,169,97,0.3)}
-.btn-secondary{display:inline-flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:500;color:var(--off-white);border-bottom:1px solid var(--border);padding-bottom:.3rem;transition:border-color .3s var(--ease)}
-.btn-secondary:hover{border-color:var(--gold)}
-.hero-scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;transition:opacity 1s var(--ease) 1.2s}
-.hero.in .hero-scroll-hint{opacity:.7}
-.hero-scroll-hint .line{width:1px;height:32px;background:var(--gold);animation:scrollPulse 2s ease-in-out infinite}
-@keyframes scrollPulse{0%,100%{transform:scaleY(0.3);opacity:.3}50%{transform:scaleY(1);opacity:1}}
+/* Portfolio */
+.portfolio{background:#080808}
+.portfolio-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:60px}
+.portfolio-item{position:relative;height:420px;overflow:hidden;cursor:pointer}
+.portfolio-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.4,0,.2,1);filter:brightness(.6)}
+.portfolio-item:hover img{transform:scale(1.08);filter:brightness(.8)}
+.portfolio-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,10,10,.95) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:36px}
+.portfolio-overlay .cat{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#c4a35a;margin-bottom:8px}
+.portfolio-overlay h3{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:6px}
+.portfolio-overlay p{font-size:14px;color:#888}
 
-/* ===== SCROLL WRAPPER (covers hero) ===== */
-.scroll-content{position:relative;z-index:2;background:var(--navy)}
+/* Stats */
+.stats{background:linear-gradient(180deg,#0a0a0a,#111);text-align:center;border-top:1px solid rgba(196,163,90,.08);border-bottom:1px solid rgba(196,163,90,.08)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-top:60px}
+.stat-item{text-align:center}
+.stat-number{font-family:'Playfair Display',serif;font-size:clamp(48px,6vw,72px);font-weight:700;color:#c4a35a;line-height:1}
+.stat-label{font-size:14px;color:#888;margin-top:12px;letter-spacing:1px;font-weight:400}
 
-/* ===== SECTION COMMON ===== */
-.section-header{margin-bottom:4rem}
-.section-header .eyebrow{margin-bottom:1rem}
-.section-header h2{font-size:clamp(2rem,4.5vw,3.5rem);max-width:700px}
-.section-header p{margin-top:1.25rem;font-size:1.05rem;color:var(--muted);max-width:560px;font-weight:300}
+/* Testimonials */
+.testimonials{background:#0a0a0a}
+.testimonials-grid{margin-top:60px;display:flex;flex-direction:column;gap:32px}
+.testimonial-card{display:flex;gap:24px;align-items:center;max-width:760px;padding:32px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:4px}
+.testimonial-card:nth-child(even){margin-left:auto;flex-direction:row-reverse}
+.testimonial-avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(196,163,90,.3)}
+.testimonial-content p{font-family:'Playfair Display',serif;font-size:17px;line-height:1.6;color:#ccc;font-style:italic;margin-bottom:12px}
+.testimonial-content .author{font-size:14px;color:#c4a35a;font-weight:600}
+.testimonial-content .role{font-size:13px;color:#666}
 
-/* Reveal classes */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal.in{opacity:1;transform:translateY(0)}
-.reveal-stagger>*{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.reveal-stagger.in>*{opacity:1;transform:translateY(0)}
-.reveal-stagger.in>*:nth-child(1){transition-delay:0s}
-.reveal-stagger.in>*:nth-child(2){transition-delay:.1s}
-.reveal-stagger.in>*:nth-child(3){transition-delay:.2s}
-.reveal-stagger.in>*:nth-child(4){transition-delay:.3s}
+/* CTA */
+.cta{min-height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:100px 40px}
+.cta-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1408,#0a0a0a,#1a1408);background-size:200% 200%;animation:gradientShift 8s ease infinite;z-index:0}
+.cta-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(196,163,90,.15),transparent 60%)}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.cta-content{position:relative;z-index:2;max-width:700px}
+.cta-content h2{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,64px);font-weight:700;line-height:1.1;margin-bottom:24px;color:#fff}
+.cta-content h2 span{color:#c4a35a;font-style:italic}
+.cta-content p{font-size:18px;color:#999;margin-bottom:40px;font-weight:300;line-height:1.6}
+.cta-button{display:inline-block;padding:20px 48px;background:#c4a35a;color:#0a0a0a;text-decoration:none;font-size:15px;font-weight:600;letter-spacing:1px;border-radius:2px;transition:all .3s}
+.cta-button:hover{background:#d4b36a;transform:translateY(-3px);box-shadow:0 10px 30px rgba(196,163,90,.3)}
 
-/* Clip-path text reveal */
-.clip-reveal{clip-path:inset(0 100% 0 0);transition:clip-path 1.2s var(--ease)}
-.clip-reveal.in{clip-path:inset(0 0 0 0)}
+/* Footer */
+footer{padding:60px 40px;background:#050505;border-top:1px solid rgba(196,163,90,.08);text-align:center}
+footer p{font-size:13px;color:#555;letter-spacing:.5px}
+footer .logo{font-family:'Playfair Display',serif;font-size:20px;color:#c4a35a;margin-bottom:12px;font-weight:700}
 
-/* ===== SERVICES ===== */
-.services{background:var(--navy);padding:8rem 0}
-.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
-@media(max-width:768px){.services-grid{grid-template-columns:1fr}}
-.service-card{background:var(--navy-2);border:1px solid var(--border);border-radius:4px;padding:2.5rem;position:relative;overflow:hidden;transition:all .4s var(--ease)}
-.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .4s var(--ease)}
-.service-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.3);border-color:rgba(201,169,97,0.2)}
-.service-card:hover::before{opacity:1}
-.service-card .icon{width:48px;height:48px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;background:var(--gold-soft);border-radius:6px}
-.service-card .icon svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.5}
-.service-card h3{font-size:1.5rem;margin-bottom:.75rem}
-.service-card p{color:var(--muted);font-size:.95rem;font-weight:300;line-height:1.7}
-.service-card .num{position:absolute;top:1.5rem;right:1.75rem;font-family:'Playfair Display',serif;font-size:1rem;color:rgba(201,169,97,0.3)}
-
-/* ===== ABOUT / STORY ===== */
-.about{background:var(--navy-2);padding:8rem 0;position:relative;overflow:hidden}
-.about::before{content:'';position:absolute;top:50%;right:-20%;width:50%;height:80%;background:radial-gradient(circle,rgba(201,169,97,0.06) 0%,transparent 60%);transform:translateY(-50%)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
-@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:3rem}}
-.about-text h2{font-size:clamp(2rem,4vw,3.25rem);margin-bottom:1.5rem}
-.about-text p{color:var(--muted);font-weight:300;margin-bottom:1.25rem;font-size:1.05rem}
-.about-text .gold-line{display:block;width:48px;height:2px;background:var(--gold);margin-bottom:1.5rem}
-.about-visual{position:relative}
-.about-visual .frame{aspect-ratio:4/5;background:linear-gradient(135deg,var(--navy-3),var(--navy));border:1px solid var(--border);border-radius:4px;position:relative;overflow:hidden}
-.about-visual .frame::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,97,0.08),transparent 60%)}
-.about-visual .frame-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem}
-.about-visual .frame-content .big-num{font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;color:var(--gold);line-height:1}
-.about-visual .frame-content .big-num-label{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
-
-/* ===== STATS ===== */
-.stats{background:var(--navy);padding:7rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
-@media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:3rem}}
-.stat-item{text-align:center;position:relative}
-.stat-item:not(:last-child)::after{content:'';position:absolute;right:-1rem;top:15%;height:70%;width:1px;background:var(--border)}
-@media(max-width:768px){.stat-item:not(:last-child)::after{display:none}}
-.stat-num{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:var(--gold);line-height:1}
-.stat-suffix{font-size:clamp(1.5rem,3vw,2.5rem);color:var(--gold);font-family:'Playfair Display',serif;font-weight:600}
-.stat-label{margin-top:.75rem;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500}
-
-/* ===== CASE STUDY ===== */
-.case-study{background:var(--navy-2);padding:8rem 0;position:relative;overflow:hidden}
-.case-study-card{background:linear-gradient(135deg,var(--navy-3),var(--navy-2));border:1px solid var(--border);border-radius:6px;padding:4rem;position:relative;overflow:hidden}
-@media(max-width:768px){.case-study-card{padding:2.5rem}}
-.case-study-card::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,rgba(201,169,97,0.1),transparent 70%);transform:translate(30%,-30%)}
-.case-study-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
-@media(max-width:900px){.case-study-grid{grid-template-columns:1fr;gap:2rem}}
-.case-study .tag{display:inline-block;padding:.4rem 1rem;background:var(--gold-soft);border:1px solid rgba(201,169,97,0.2);border-radius:100px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem}
-.case-study h3{font-size:clamp(1.75rem,3.5vw,2.5rem);margin-bottom:1rem}
-.case-study p{color:var(--muted);font-weight:300;margin-bottom:1.5rem}
-.case-study .metrics{display:flex;gap:2.5rem;margin-top:2rem}
-.case-study .metric .val{font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:700;color:var(--gold)}
-.case-study .metric .lbl{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.25rem}
-.case-study-visual{aspect-ratio:1;background:var(--navy);border:1px solid var(--border);border-radius:4px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.case-study-visual .ring{width:70%;height:70%;border:1px solid rgba(201,169,97,0.2);border-radius:50%;position:absolute}
-.case-study-visual .ring:nth-child(2){width:50%;height:50%;border-color:rgba(201,169,97,0.35)}
-.case-study-visual .ring:nth-child(3){width:30%;height:30%;border-color:rgba(201,169,97,0.6)}
-.case-study-visual .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;position:relative;z-index:2}
-
-/* ===== TESTIMONIAL ===== */
-.testimonial{background:var(--navy);padding:8rem 0;text-align:center;position:relative}
-.testimonial .quote-mark{font-family:'Playfair Display',serif;font-size:8rem;color:rgba(201,169,97,0.12);line-height:1;margin-bottom:-2rem}
-.testimonial blockquote{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.25rem);font-weight:400;font-style:italic;max-width:800px;margin:0 auto 2rem;line-height:1.5;color:var(--off-white)}
-.testimonial .author{font-size:.95rem;font-weight:600;color:var(--off-white)}
-.testimonial .author-role{font-size:.85rem;color:var(--muted);font-weight:300;margin-top:.25rem}
-
-/* ===== CTA ===== */
-.cta{background:var(--navy-2);padding:8rem 0;text-align:center;position:relative;overflow:hidden}
-.cta::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;max-width:100%;height:400px;background:radial-gradient(ellipse,rgba(201,169,97,0.12),transparent 60%);pointer-events:none}
-.cta-content{position:relative;z-index:1}
-.cta h2{font-size:clamp(2.25rem,5vw,4rem);margin-bottom:1.5rem}
-.cta h2 em{font-style:italic;color:var(--gold);font-weight:400}
-.cta p{color:var(--muted);font-size:1.1rem;max-width:520px;margin:0 auto 2.5rem;font-weight:300}
-.cta .btn-primary{font-size:1rem;padding:1.15rem 2.5rem}
-
-/* ===== FOOTER ===== */
-footer{background:var(--charcoal);padding:4rem 0 2rem;border-top:1px solid var(--border)}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
-@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:2rem}}
-.footer-brand .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:1rem}
-.footer-brand .logo span{color:var(--gold)}
-.footer-brand p{color:var(--muted);font-size:.9rem;font-weight:300;max-width:300px}
-.footer-col h4{font-family:'Inter',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;font-weight:600}
-.footer-col a{display:block;color:var(--muted);font-size:.9rem;margin-bottom:.75rem;transition:color .3s var(--ease)}
-.footer-col a:hover{color:var(--off-white)}
-.footer-bottom{border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted)}
-@media(max-width:768px){.footer-bottom{flex-direction:column;gap:1rem;text-align:center}}
-.footer-bottom .social{display:flex;gap:1rem}
-.footer-bottom .social a{width:32px;height:32px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s var(--ease)}
-.footer-bottom .social a:hover{border-color:var(--gold);color:var(--gold)}
-.footer-bottom .social svg{width:14px;height:14px;fill:currentColor}
-
-/* ===== PARALLAX BG ELEMENTS ===== */
-.parallax-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.parallax-bg .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15}
-
-/* ===== REDUCED MOTION ===== */
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  .reveal,.reveal-stagger>*,.clip-reveal,.hero .eyebrow,.hero h1,.hero .hero-sub,.hero .hero-cta-row,.hero .hero-scroll-hint{opacity:1!important;transform:none!important;clip-path:none!important}
+/* Responsive */
+@media(max-width:768px){
+ nav ul{display:none}
+ .portfolio-grid{grid-template-columns:1fr}
+ .testimonial-card,.testimonial-card:nth-child(even){flex-direction:column;text-align:center;margin:0}
+ .testimonial-card:nth-child(even){margin-left:0}
+ section{padding:60px 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="nav">
-  <div class="nav-inner">
-    <a href="#" class="logo">Wem<span>·</span>bassy</a>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#case-study">Work</a>
-      <a href="#contact" class="nav-cta">Book a Call</a>
-    </div>
-  </div>
+ <div class="logo">Wembassy</div>
+ <ul>
+  <li><a href="#services">Services</a></li>
+  <li><a href="#portfolio">Work</a></li>
+  <li><a href="#stats">Results</a></li>
+  <li><a href="#testimonials">Voices</a></li>
+ </ul>
+ <a href="#cta" class="nav-cta">START A PROJECT</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-grain"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Digital Infrastructure for Family Wealth</div>
-    <h1>We build the <em>infrastructure</em> for modern family wealth.</h1>
-    <p class="hero-sub">Wembassy partners with family offices and wealth managers to design, build, and deploy the software systems that power the next generation of stewardship.</p>
-    <div class="hero-cta-row">
-      <a href="https://wembassy.com/contact" class="btn-primary">Book a Call →</a>
-      <a href="#services" class="btn-secondary">Explore our work</a>
-    </div>
+<!-- Hero -->
+<section class="hero">
+ <div class="hero-bg"></div>
+ <div class="hero-content">
+  <div class="hero-tag">AI-Powered Digital Agency</div>
+  <h1>We build websites that <span>think</span>,<br>content that <span>converts</span>.</h1>
+  <p>Wembassy pairs award-winning design with AI-driven content systems to create digital experiences that don't just look stunning — they scale, adapt, and grow your business while you sleep.</p>
+  <div class="hero-cta">
+   <a href="#cta" class="primary">Start a Project</a>
+   <a href="#portfolio" class="secondary">View Our Work</a>
   </div>
-  <div class="hero-scroll-hint">
-    <span>Scroll</span>
-    <div class="line"></div>
-  </div>
+ </div>
+ <div class="scroll-indicator"></div>
 </section>
 
-<!-- SCROLL CONTENT WRAPPER -->
-<div class="scroll-content">
-
-<!-- SERVICES -->
-<section class="services section-pad" id="services">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="eyebrow">What We Build</div>
-      <h2 class="clip-reveal">Four pillars of a modern family office.</h2>
-      <p>From operating systems to brand identity, we deliver the full technology stack that family offices need to compete in a digital-first world.</p>
-    </div>
-    <div class="services-grid reveal-stagger">
-      <div class="service-card">
-        <div class="num">01</div>
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg></div>
-        <h3>Family Office OS</h3>
-        <p>A unified wealth management platform — contacts, governance, opportunities, and reporting in one secure system. Built for multi-generational stewardship.</p>
-      </div>
-      <div class="service-card">
-        <div class="num">02</div>
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM8 21V8h8v13M3 12h18"/></svg></div>
-        <h3>Custom Web Experiences</h3>
-        <p>Bespoke websites and portals that reflect the sophistication of your firm. Editorial design, engineered for performance and trust.</p>
-      </div>
-      <div class="service-card">
-        <div class="num">03</div>
-        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg></div>
-        <h3>Brand Identity</h3>
-        <p>Visual systems and narrative frameworks that communicate authority. Logos, typography, guidelines, and the story behind the family you serve.</p>
-      </div>
-      <div class="service-card">
-        <div class="num">04</div>
-        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg></div>
-        <h3>AI-Powered Automation</h3>
-        <p>Intelligent workflows that eliminate manual work — from document processing to meeting intelligence to proactive relationship management.</p>
-      </div>
-    </div>
+<!-- Services -->
+<section class="services" id="services">
+ <div class="container">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Services built for<br>the AI era</h2>
+  <div class="services-grid">
+   <div class="service-card">
+    <div class="service-icon">◈</div>
+    <h3>AI Website Design</h3>
+    <p>Custom-designed websites built with intelligent content layers. Every page adapts to visitor behavior, serving the right message at the right moment.</p>
+    <div class="tags"><span>Web Design</span><span>UX Strategy</span><span>AI Integration</span></div>
+   </div>
+   <div class="service-card">
+    <div class="service-icon">◆</div>
+    <h3>Content Engine Systems</h3>
+    <p>Automated content pipelines that research, draft, and publish across your channels. Your brand voice, amplified by AI, controlled by strategy.</p>
+    <div class="tags"><span>Content Strategy</span><span>Automation</span><span>SEO</span></div>
+   </div>
+   <div class="service-card">
+    <div class="service-icon">◉</div>
+    <h3>Brand & Identity</h3>
+    <p>From naming to visual systems, we craft brands that resonate. Logo suites, typography, guidelines — everything needed to look unmistakably you.</p>
+    <div class="tags"><span>Branding</span><span>Visual Identity</span><span>Guidelines</span></div>
+   </div>
+   <div class="service-card">
+    <div class="service-icon">◇</div>
+    <h3>Growth Analytics</h3>
+    <p>Real-time dashboards that track what matters. Traffic, conversions, content performance — all in one view, all actionable from day one.</p>
+    <div class="tags"><span>Analytics</span><span>Dashboards</span><span>CRO</span></div>
+   </div>
+   <div class="service-card">
+    <div class="service-icon">◐</div>
+    <h3>Membership Platforms</h3>
+    <p>Turn your expertise into recurring revenue. We build membership sites with gated content, community features, and automated onboarding.</p>
+    <div class="tags"><span>Membership</span><span>Community</span><span>Recurring Revenue</span></div>
+   </div>
+   <div class="service-card">
+    <div class="service-icon">◑</div>
+    <h3>AI Chat & Support</h3>
+    <p>Intelligent support agents trained on your knowledge base. 24/7 responses that sound like your team, not a robot. Handoff to humans when it matters.</p>
+    <div class="tags"><span>AI Chat</span><span>Support</span><span>Knowledge Base</span></div>
+   </div>
   </div>
+ </div>
 </section>
 
-<!-- ABOUT / STORY -->
-<section class="about section-pad" id="about">
-  <div class="parallax-bg">
-    <div class="blob" style="width:400px;height:400px;background:var(--gold);top:10%;right:5%"></div>
-  </div>
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <span class="gold-line"></span>
-        <div class="eyebrow" style="margin-bottom:1rem">Our Story</div>
-        <h2 class="clip-reveal">Built by operators who understand the weight of stewardship.</h2>
-        <p>Wembassy was founded on a simple observation: family offices were managing eight-figure portfolios with tools built for small businesses. Spreadsheets. Shared drives. Disconnected SaaS apps.</p>
-        <p>We build the infrastructure that replaces all of it — secure, purpose-built platforms that give families and their advisors a single source of truth. Every contact, every decision, every opportunity, in one place.</p>
-        <p>We don't ship templates. We engineer systems.</p>
-      </div>
-      <div class="about-visual reveal">
-        <div class="frame">
-          <div class="frame-content">
-            <div class="big-num" id="aboutNum">8</div>
-            <div class="big-num-label">Years building for family offices</div>
-          </div>
-        </div>
-      </div>
+<!-- Portfolio -->
+<section class="portfolio" id="portfolio">
+ <div class="container">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-title">Projects we're<br>proud of</h2>
+  <div class="portfolio-grid">
+   <div class="portfolio-item">
+    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80" alt="SaaS Platform">
+    <div class="portfolio-overlay">
+     <div class="cat">SaaS Platform</div>
+     <h3>Novaflow Systems</h3>
+     <p>AI workflow automation platform — 300% increase in demo requests</p>
     </div>
+   </div>
+   <div class="portfolio-item">
+    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" alt="E-commerce">
+    <div class="portfolio-overlay">
+     <div class="cat">E-commerce</div>
+     <h3>Maison Doré</h3>
+     <p>Luxury fragrance brand — $2M in first-year online revenue</p>
+    </div>
+   </div>
+   <div class="portfolio-item">
+    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80" alt="Corporate">
+    <div class="portfolio-overlay">
+     <div class="cat">Corporate</div>
+     <h3>Helix Partners</h3>
+     <p>Management consulting firm — 5x lead generation in 90 days</p>
+    </div>
+   </div>
+   <div class="portfolio-item">
+    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52e?w=800&q=80" alt="Membership">
+    <div class="portfolio-overlay">
+     <div class="cat">Membership</div>
+     <h3>The Founders Circle</h3>
+     <p>Exclusive entrepreneur community — 1,200 members in launch month</p>
+    </div>
+   </div>
   </div>
+ </div>
 </section>
 
-<!-- STATS -->
+<!-- Stats -->
 <section class="stats" id="stats">
-  <div class="container">
-    <div class="stats-grid reveal-stagger">
-      <div class="stat-item">
-        <div><span class="stat-num" data-count="120" data-suffix="">0</span><span class="stat-suffix">+</span></div>
-        <div class="stat-label">Projects Delivered</div>
-      </div>
-      <div class="stat-item">
-        <div><span class="stat-num" data-count="2.4" data-suffix="B">0</span><span class="stat-suffix" id="suffix2"></span></div>
-        <div class="stat-label">Assets Influenced</div>
-      </div>
-      <div class="stat-item">
-        <div><span class="stat-num" data-count="40" data-suffix="">0</span><span class="stat-suffix">+</span></div>
-        <div class="stat-label">Family Offices Served</div>
-      </div>
-      <div class="stat-item">
-        <div><span class="stat-num" data-count="99.9" data-suffix="">0</span><span class="stat-suffix">%</span></div>
-        <div class="stat-label">Uptime Guaranteed</div>
-      </div>
-    </div>
+ <div class="container">
+  <div class="section-label">By the Numbers</div>
+  <h2 class="section-title">Results that<br>speak for themselves</h2>
+  <div class="stats-grid">
+   <div class="stat-item">
+    <div class="stat-number" data-target="200" data-suffix="+">0</div>
+    <div class="stat-label">Websites Built</div>
+   </div>
+   <div class="stat-item">
+    <div class="stat-number" data-target="15" data-suffix="K+">0</div>
+    <div class="stat-label">Content Pieces Published</div>
+   </div>
+   <div class="stat-item">
+    <div class="stat-number" data-target="98" data-suffix="%">0</div>
+    <div class="stat-label">Client Retention Rate</div>
+   </div>
+   <div class="stat-item">
+    <div class="stat-number" data-target="40" data-suffix="M+">0</div>
+    <div class="stat-label">Words Generated by AI</div>
+   </div>
   </div>
+ </div>
 </section>
 
-<!-- CASE STUDY -->
-<section class="case-study section-pad" id="case-study">
-  <div class="container">
-    <div class="case-study-card reveal">
-      <div class="case-study-grid">
-        <div>
-          <span class="tag">Featured Engagement</span>
-          <h3>The Waldorf Family Office: A complete digital transformation.</h3>
-          <p>We rebuilt the entire technology stack for a multi-generational family office managing assets across three continents. From a fragmented collection of spreadsheets and legacy CRM to a unified operating system — in 90 days.</p>
-          <div class="metrics">
-            <div class="metric">
-              <div class="val">90</div>
-              <div class="lbl">Days to Deploy</div>
-            </div>
-            <div class="metric">
-              <div class="val">3x</div>
-              <div class="lbl">Faster Reporting</div>
-            </div>
-            <div class="metric">
-              <div class="val">100%</div>
-              <div class="lbl">Data Migration</div>
-            </div>
-          </div>
-        </div>
-        <div class="case-study-visual">
-          <div class="ring"></div>
-          <div class="ring"></div>
-          <div class="ring"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
+<!-- Testimonials -->
+<section class="testimonials" id="testimonials">
+ <div class="container">
+  <div class="section-label">Client Voices</div>
+  <h2 class="section-title">What partners say</h2>
+  <div class="testimonials-grid">
+   <div class="testimonial-card">
+    <img src="https://i.pravatar.cc/150?img=12" class="testimonial-avatar" alt="Sarah Chen">
+    <div class="testimonial-content">
+     <p>"Wembassy didn't just build us a website — they built us a content machine. We went from publishing 2 articles a month to 20, all on-brand, all driving traffic. Our organic search traffic is up 340%."</p>
+     <div class="author">Sarah Chen</div>
+     <div class="role">CMO, Novaflow Systems</div>
     </div>
-  </div>
-</section>
-
-<!-- TESTIMONIAL -->
-<section class="testimonial" id="testimonial">
-  <div class="container">
-    <div class="reveal">
-      <div class="quote-mark">"</div>
-      <blockquote>Wembassy didn't just build us software — they built us a foundation. Every decision, every relationship, every opportunity now lives in one place. It's changed how our family operates.</blockquote>
-      <div class="author">James Whitfield</div>
-      <div class="author-role">Principal, Whitfield Family Office</div>
+   </div>
+   <div class="testimonial-card">
+    <img src="https://i.pravatar.cc/150?img=33" class="testimonial-avatar" alt="Marcus Reid">
+    <div class="testimonial-content">
+     <p>"The AI integration they built into our support portal handles 70% of inquiries automatically. Our team finally focuses on complex problems instead of answering the same five questions all day."</p>
+     <div class="author">Marcus Reid</div>
+     <div class="role">COO, Helix Partners</div>
     </div>
+   </div>
+   <div class="testimonial-card">
+    <img src="https://i.pravatar.cc/150?img=45" class="testimonial-avatar" alt="Elena Voss">
+    <div class="testimonial-content">
+     <p>"Our membership platform launched with 1,200 paying members in the first month. Wembassy understood the community vibe we wanted and built technology that got out of the way."</p>
+     <div class="author">Elena Voss</div>
+     <div class="role">Founder, The Founders Circle</div>
+    </div>
+   </div>
   </div>
+ </div>
 </section>
 
 <!-- CTA -->
-<section class="cta" id="contact">
-  <div class="container">
-    <div class="cta-content reveal">
-      <h2>Let's build your <em>infrastructure</em>.</h2>
-      <p>Book a 30-minute call. We'll map your current systems and show you what a unified family office platform looks like.</p>
-      <a href="https://wembassy.com/contact" class="btn-primary">Book a Call →</a>
-    </div>
-  </div>
+<section class="cta" id="cta">
+ <div class="cta-bg"></div>
+ <div class="cta-content">
+  <h2>Let's build something<br><span>extraordinary</span></h2>
+  <p>Book a free 30-minute strategy session. We'll map your digital presence, identify AI opportunities, and show you exactly what's possible.</p>
+  <a href="#" class="cta-button">BOOK YOUR STRATEGY SESSION</a>
+ </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">Wem<span>·</span>bassy</div>
-        <p>We build the infrastructure for modern family wealth. Digital systems, brand experiences, and intelligent automation for family offices and wealth managers.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Services</h4>
-        <a href="#">Family Office OS</a>
-        <a href="#">Web Experiences</a>
-        <a href="#">Brand Identity</a>
-        <a href="#">AI Automation</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="#">About</a>
-        <a href="#">Case Studies</a>
-        <a href="#">Insights</a>
-        <a href="#">Careers</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="https://wembassy.com/contact">Book a Call</a>
-        <a href="mailto:hello@wembassy.com">hello@wembassy.com</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Wembassy. All rights reserved.</span>
-      <div class="social">
-        <a href="#"><svg viewBox="0 0 24 24"><path d="M20.5 2h-3.5L12 9 7 2H3l7 11-7 9h3.5l5-7 5 7H21l-7-11z"/></svg></a>
-        <a href="#"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 5h-3v1.5h3v3h-3V18h-3v-5.5h-2V9h2V7a2 2 0 012-2h3z"/></svg></a>
-      </div>
-    </div>
-  </div>
+ <div class="logo">Wembassy</div>
+ <p>AI-Powered Digital Agency — Building the Web of Tomorrow, Today</p>
 </footer>
 
-</div><!-- /scroll-content -->
-
 <script>
-(function(){
-  'use strict';
+gsap.registerPlugin(ScrollTrigger);
 
-  // ===== NAV SCROLL =====
-  const nav = document.getElementById('nav');
-  const heroBg = document.getElementById('heroBg');
-  const hero = document.getElementById('hero');
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+// Nav scroll effect
+window.addEventListener('scroll',()=>{
+ const nav=document.getElementById('nav');
+ if(window.scrollY>60) nav.classList.add('scrolled');
+ else nav.classList.remove('scrolled');
+});
 
-  function onScroll(){
-    const y = window.scrollY;
-    if(y > 60) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
+// Hero animations
+const heroTl=gsap.timeline({delay:.3});
+heroTl.to('.hero-tag',{opacity:1,duration:.8,ease:'power2.out'})
+ .to('.hero h1',{opacity:1,duration:1.2,ease:'power3.out'},'-=.4')
+ .to('.hero p',{opacity:1,duration:1,ease:'power2.out'},'-=.6')
+ .to('.hero-cta',{opacity:1,duration:.8,ease:'power2.out'},'-=.4');
 
-    // Hero background parallax / gradient shift
-    if(!prefersReduced){
-      const heroH = window.innerHeight;
-      const progress = Math.min(y / heroH, 1);
-      const r = Math.round(10 + progress * 6);
-      const g = Math.round(22 + progress * 12);
-      const b = Math.round(40 + progress * 20);
-      heroBg.style.background = `linear-gradient(135deg, rgb(${r},${g},${b}) 0%, rgb(${r+4},${g+4},${b+8}) 40%, rgb(${r+8},${g+8},${b+16}) 70%, rgb(${r},${g},${b}) 100%)`;
-      // Subtle parallax on hero content
-      const content = hero.querySelector('.hero-content');
-      if(content) content.style.transform = `translateY(${progress * 30}px)`;
-      const opacity = 1 - progress * 0.8;
-      hero.querySelector('.hero-content').style.opacity = opacity;
-    }
+// Hero parallax
+gsap.to('.hero-bg',{
+ yPercent:30,ease:'none',
+ scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:1}
+});
+
+// Service cards reveal
+gsap.utils.toArray('.service-card').forEach((card,i)=>{
+ gsap.from(card,{
+  y:60,opacity:0,duration:.8,ease:'power3.out',
+  scrollTrigger:{trigger:card,start:'top 85%'}
+ });
+});
+
+// Section titles
+gsap.utils.toArray('.section-title').forEach(title=>{
+ gsap.from(title,{
+  y:40,opacity:0,duration:1,ease:'power3.out',
+  scrollTrigger:{trigger:title,start:'top 80%'}
+ });
+});
+
+gsap.utils.toArray('.section-label').forEach(label=>{
+ gsap.from(label,{
+  y:20,opacity:0,duration:.6,ease:'power2.out',
+  scrollTrigger:{trigger:label,start:'top 85%'}
+ });
+});
+
+// Portfolio items
+gsap.utils.toArray('.portfolio-item').forEach((item,i)=>{
+ gsap.from(item,{
+  clipPath:'inset(100% 0% 0% 0%)',duration:1.2,ease:'power4.out',
+  scrollTrigger:{trigger:item,start:'top 85%'}
+ });
+ gsap.from(item.querySelector('img'),{
+  scale:1.3,duration:1.5,ease:'power3.out',
+  scrollTrigger:{trigger:item,start:'top 85%'}
+ });
+});
+
+// Stats count-up
+gsap.utils.toArray('.stat-number').forEach(stat=>{
+ const target=parseInt(stat.dataset.target);
+ const suffix=stat.dataset.suffix||'';
+ ScrollTrigger.create({
+  trigger:stat,start:'top 80%',
+  onEnter:()=>{
+   gsap.to({val:0},{
+    val:target,duration:2.5,ease:'power2.out',
+    onUpdate:function(){stat.textContent=Math.round(this.targets()[0].val)+suffix;}
+   });
   }
+ });
+});
 
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+// Testimonials
+gsap.utils.toArray('.testimonial-card').forEach((card,i)=>{
+ const direction=i%2===0?-80:80;
+ gsap.from(card,{
+  x:direction,opacity:0,duration:1,ease:'power3.out',
+  scrollTrigger:{trigger:card,start:'top 85%'}
+ });
+});
 
-  // ===== HERO ENTRANCE =====
-  requestAnimationFrame(function(){
-    setTimeout(function(){ hero.classList.add('in'); }, 100);
-  });
-
-  // ===== INTERSECTION OBSERVER REVEALS =====
-  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger, .clip-reveal');
-  const io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, {threshold:0.15, rootMargin:'0px 0px -50px 0px'});
-
-  revealEls.forEach(function(el){ io.observe(el); });
-
-  // ===== COUNT-UP ANIMATION =====
-  const statNums = document.querySelectorAll('.stat-num');
-  const statsIO = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        animateCount(entry.target);
-        statsIO.unobserve(entry.target);
-      }
-    });
-  }, {threshold:0.5});
-
-  statNums.forEach(function(el){ statsIO.observe(el); });
-
-  function animateCount(el){
-    if(prefersReduced){
-      el.textContent = el.dataset.count;
-      return;
-    }
-    const target = parseFloat(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const isDecimal = target % 1 !== 0;
-    const duration = 1800;
-    const start = performance.now();
-
-    function tick(now){
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // easeOutExpo
-      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const current = target * eased;
-      if(isDecimal){
-        el.textContent = current.toFixed(1);
-      } else {
-        el.textContent = Math.floor(current);
-      }
-      if(progress < 1) requestAnimationFrame(tick);
-      else {
-        el.textContent = isDecimal ? target.toFixed(1) : target;
-        if(suffix) el.textContent = (isDecimal ? target.toFixed(1) : target) + suffix;
-      }
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // ===== PARALLAX BLOBS =====
-  if(!prefersReduced){
-    const blobs = document.querySelectorAll('.parallax-bg .blob');
-    window.addEventListener('scroll', function(){
-      const y = window.scrollY;
-      blobs.forEach(function(blob, i){
-        const speed = (i + 1) * 0.15;
-        blob.style.transform = `translateY(${y * speed * -0.1}px)`;
-      });
-    }, {passive:true});
-  }
-})();
+// CTA
+gsap.from('.cta-content h2',{
+ y:50,opacity:0,duration:1.2,ease:'power3.out',
+ scrollTrigger:{trigger:'.cta',start:'top 70%'}
+});
+gsap.from('.cta-content p',{
+ y:30,opacity:0,duration:1,ease:'power2.out',
+ scrollTrigger:{trigger:'.cta',start:'top 70%'},delay:.2
+});
+gsap.from('.cta-button',{
+ y:30,opacity:0,duration:1,ease:'power2.out',
+ scrollTrigger:{trigger:'.cta',start:'top 70%'},delay:.4
+});
 </script>
 </body>
 </html>
